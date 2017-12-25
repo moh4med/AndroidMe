@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -16,6 +17,8 @@ import java.util.List;
  */
 
 public class BodyPartFragment extends Fragment {
+    private static final String IMAGERESTAG = "IMAGERES";
+    private static final String IMAGEIDTAG = "IMAGEID";
     private static String TAG=BodyPartFragment.class.getSimpleName();
     private List<Integer> ImageRes;
     private int ImageId;
@@ -25,6 +28,10 @@ public class BodyPartFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        if(savedInstanceState!=null){
+            setImageId(savedInstanceState.getInt(IMAGEIDTAG));
+            setImageRes(savedInstanceState.getIntegerArrayList(IMAGERESTAG));
+        }
         View rootview = inflater.inflate(R.layout.fragment_body_part, container, false);
         final ImageView imageView = (ImageView)rootview.findViewById(R.id.body_part_image_view);
         if(ImageRes !=null) {
@@ -52,6 +59,8 @@ public class BodyPartFragment extends Fragment {
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
+        outState.putIntegerArrayList(IMAGERESTAG, (ArrayList<Integer>) ImageRes);
+        outState.putInt(IMAGEIDTAG,ImageId);
         super.onSaveInstanceState(outState);
     }
 }
