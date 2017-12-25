@@ -17,8 +17,8 @@ import java.util.List;
 
 public class BodyPartFragment extends Fragment {
     private static String TAG=BodyPartFragment.class.getSimpleName();
-    private List<Integer> mImageIds;
-    private int mListId;
+    private List<Integer> ImageRes;
+    private int ImageId;
     public BodyPartFragment(){
 
     }
@@ -26,20 +26,32 @@ public class BodyPartFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootview = inflater.inflate(R.layout.fragment_body_part, container, false);
-        ImageView imageView = (ImageView)rootview.findViewById(R.id.body_part_image_view);
-        if(mImageIds!=null) {
-            imageView.setImageResource(mImageIds.get(mListId));
+        final ImageView imageView = (ImageView)rootview.findViewById(R.id.body_part_image_view);
+        if(ImageRes !=null) {
+            imageView.setImageResource(ImageRes.get(ImageId));
+            imageView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ImageId = (ImageId + 1) % ImageRes.size();
+                    imageView.setImageResource(ImageRes.get(ImageId));
+                }
+            });
         }else{
             Log.v(TAG,"Fragment has null list of image");
         }
         return rootview;
     }
 
-    public void setmListId(int mListId) {
-        this.mListId = mListId;
+    public void setImageId(int imageId) {
+        this.ImageId = imageId;
     }
 
-    public void setmImageIds(List<Integer> mImageIds) {
-        this.mImageIds = mImageIds;
+    public void setImageRes(List<Integer> imageRes) {
+        this.ImageRes = imageRes;
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
     }
 }
