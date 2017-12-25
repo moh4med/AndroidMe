@@ -22,6 +22,7 @@ public class BodyPartFragment extends Fragment {
     private static String TAG=BodyPartFragment.class.getSimpleName();
     private List<Integer> ImageRes;
     private int ImageId;
+    ImageView  imageView;
     public BodyPartFragment(){
 
     }
@@ -33,7 +34,7 @@ public class BodyPartFragment extends Fragment {
             setImageRes(savedInstanceState.getIntegerArrayList(IMAGERESTAG));
         }
         View rootview = inflater.inflate(R.layout.fragment_body_part, container, false);
-        final ImageView imageView = (ImageView)rootview.findViewById(R.id.body_part_image_view);
+        imageView = (ImageView)rootview.findViewById(R.id.body_part_image_view);
         if(ImageRes !=null) {
             imageView.setImageResource(ImageRes.get(ImageId));
             imageView.setOnClickListener(new View.OnClickListener() {
@@ -56,7 +57,9 @@ public class BodyPartFragment extends Fragment {
     public void setImageRes(List<Integer> imageRes) {
         this.ImageRes = imageRes;
     }
-
+    public void changeImage(){
+        imageView.setImageResource(ImageRes.get(ImageId));
+    }
     @Override
     public void onSaveInstanceState(Bundle outState) {
         outState.putIntegerArrayList(IMAGERESTAG, (ArrayList<Integer>) ImageRes);
